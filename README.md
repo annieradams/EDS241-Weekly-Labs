@@ -1,4 +1,4 @@
-Weekly Lab Materials for EDS 241
+# Weekly Lab Materials for EDS 241
 
 
 
