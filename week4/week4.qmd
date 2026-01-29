@@ -234,7 +234,7 @@ Create a `Love plot` to visualize standardized mean differences (before & after 
 - When matching *with replacement*, some control sites were matched multiple times and receive larger weights.  
 - So we estimate outcome differences using the `weights` provided by `match.data()`.
 
-Regression (Outcome 1): Key fisheries families biomass
+Regression (Outcome 1): Herbivorous fisheries families biomass
 ```{r}
 reg_ecological <- 
 
@@ -299,15 +299,15 @@ Dudney, J., Willing, C. E., Das, A. J., Latimer, A. M., Nesmith, J. C., & Battle
 
 
 ```{r}
-data_fe <- read_csv(here("week4", "Dudney2021_study_data.csv"), show_col_types = FALSE) %>% 
-  mutate(year=factor(year), plot=factor(plot))
+data_fe <- read_csv(here("week4", "Dudney2021_study_data.csv"), show_col_types = FALSE) 
 ```
 
 
 ## Estimate a “no fixed effects” baseline model
 
 ```{r}
-mod1_nofe <- 
+mod1_nofe <- lm(perinc ~ vpd + I(vpd^2) + dbh + density,
+             data = data_fe)
 
 summ(mod1_nofe, model.fit = FALSE, digits = 3)
 ```
