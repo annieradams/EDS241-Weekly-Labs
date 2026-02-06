@@ -212,9 +212,10 @@ Let's look at our results side by side.
 ```
 
 
-:::{.callout-tip title="Comprehension Check"}
 Compare the two plots. What key differences do you notice between the left plot (binned linear) and the right plot (local polynomial)? Which one better captures the pattern in the data?
-:::
+
+**RESPONSE**:
+333
 
 ### 7. Estimate separate RDD models by country using a loop function 🔄
 
@@ -224,24 +225,7 @@ Compare the two plots. What key differences do you notice between the left plot 
 
 
 ```{r}
-run_country_rdd <- function(country_name) {
-  df_country <- sim_data %>% filter(country == country_name)
 
-    rdd_model <- rdrobust(
-      y = df_country$deforest,
-      x = df_country$distance,
-      covs = df_country %>% select(slope_cat, road_cat, water_cat, soil_cat),
-      c = 0, 
-      p = 1,
-      kernel = "triangular"
-    )
-}
-
-# Apply the function to all countries
-rdd_6country <- lapply(unique(sim_data$country), run_country_rdd)
-
-# Print summary for `DRC`
-summary(rdd_6country[[3]]) 
 ```
 
 ### 8. Generate county level discontinuity plots
@@ -273,18 +257,13 @@ for (country_name in unique(sim_data$country)) {
 
 ### 9. Print combined RDD Plots by country
 ```{r}
-final_plot <- wrap_plots(plot_list) + 
-  plot_layout(ncol = 2) +  
-  plot_annotation(
-    title = "Deforestation Rate",
-    caption = "Source: Simulation Data"
-  )
 
-final_plot
 
 ```
 
 
-:::{.callout-tip title="Comprehension Check"}
+
 How do the results of these countries compare with the results from Neal 2024?
-:::
+
+
+**RESPONSE**:
