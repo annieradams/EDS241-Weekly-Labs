@@ -41,9 +41,10 @@ The relevance condition is testable (we can check whether $Z$ predicts $D$ in a 
 
 The most common IV estimator is **Two-Stage Least Squares (2SLS)**:
 
-**First stage**: Regress the endogenous treatment on the instrument(s) and any exogenous controls:
+**First stage**: Regress the endogenous treatment on the instrument(s):
+
 $$D_i = \beta_0 + \beta_1 Z_i$$ 
-where $W$ are exogenous control variables. Save the predicted values $\hat{D}$.
+Save the predicted values $\hat{D}$.
 
 **Second stage**: Regress the outcome on the predicted values from the first stage and the same controls:
 $$Y_i = \beta_0 + \beta_1 \hat{D}_i$$ 
@@ -102,9 +103,7 @@ We will be using the `rnoaa` package to obtain our precipitation data. To do so,
 
 
 
-
-1. What omitted variables could drive both PM2.5 and asthma searches upward simultaneously?
-2. Can you think of a scenario in which precipitation might violate the exclusion restriction even after controlling for month fixed effects?
+1. Can you think of a scenario in which precipitation might violate the exclusion restriction even after controlling for month fixed effects?
 
 **RESPONSE:**
 
@@ -374,7 +373,7 @@ export_summs(m1_ols, m2_ols_fe, m3_ivreg,
 **RESPONSE:**
 
 
-2. **LATE interpretation**: IV estimates capture the **Local Average Treatment Effect (LATE)** — the effect for "compliers," i.e., observations whose PM2.5 levels are actually moved by changes in precipitation. Who are the "compliers" in this setting, and how might this affect the generalizability of our estimate?
+2. Given that our first-stage F-statistic was below 10, what changes could plausibly strengthen precipitation as an instrument for PM2.5?
 
 **RESPONSE:**
 
