@@ -135,9 +135,6 @@ head(data)
 
 **RESPONSE:** 
 
-2.  What is the unit of observation in this dataset?
-
-**RESPONSE:** 
 
 ## Declare the Synthetic Control
 
@@ -158,7 +155,7 @@ scm_data <- data %>%
     i_unit = "CA",
     i_time = 2013,
     generate_placebos = TRUE) %>%
-  generate_predictor(  # Predictors (pre-treatment averages)
+  generate_predictor(  
     time_window = 2000:2012,
     coal_share = mean(coal_share, na.rm = TRUE),
     income_pc = mean(income_pc, na.rm = TRUE),
@@ -169,7 +166,7 @@ scm_data <- data %>%
     margin_ipop = 0.02,
     sigf_ipop = 7,
     bound_ipop = 6) %>%
-  generate_control() # Generate synthetic control
+  generate_control() 
 ```
 
 ## Plot Trends
@@ -179,17 +176,10 @@ The trends plot is our first visual diagnostic. It overlays the observed outcome
 Remember the intuition from lecture: if synthetic CA looks like real CA before 2013, then synthetic CA approximates what would have happened without cap-and-trade.
 
 ```{r}
-#| warning: false
-#| message: false
 
 
-p1 <- scm_data %>%
-  plot_trends() +
-  labs(title = "California vs Synthetic California",
-       y = "CO2 per capita (power sector)",
-       x = "Year")
 
-p1
+
 ```
 
 
@@ -206,15 +196,9 @@ p1
 The gaps plot shows the **difference** between observed California and synthetic California over time. Before the treatment, the gap should hover near zero (confirming good pre-treatment fit). After 2013, persistent negative gaps would indicate that California's emissions fell below what they would have been without cap-and-trade — i.e., the magnitude of the gap equals the estimated treatment effect.
 
 ```{r}
-#| warning: false
-#| message: false
 
 
-p2 <- scm_data %>%
-  plot_differences() +
-  labs(title = "Gap: Observed - Synthetic")
 
-p2
 ```
 
 
@@ -229,15 +213,7 @@ Now we assess statistical significance using placebo tests. Recall the procedure
 The plot below overlays California's gap (highlighted) against all placebo gaps. Ideally, California's line should diverge noticeably from the placebo distribution after 2013.
 
 ```{r}
-#| warning: false
-#| message: false
 
-
-p3 <- scm_data %>%
-  plot_placebos() +
-  labs(title = "Placebo Tests")
-
-p3
 ```
 
 
@@ -256,15 +232,7 @@ $$
 A high ratio means the unit's post-treatment gap is large **relative to its pre-treatment fit**. If California's MSPE ratio ranks at or near the top, the divergence is unlikely due to chance.
 
 ```{r}
-#| warning: false
-#| message: false
 
-
-p4 <- scm_data %>%
-  plot_mspe_ratio() +
-  labs(title = "MSPE Ratio (Permutation Inference)")
-
-p4
 ```
 
 ::: {.callout-tip title="Tip"}
@@ -281,10 +249,7 @@ Click the zoom button to open the plot in a new window to better view y axis lab
 The balance table compares pre-treatment predictor values for **real California**, **synthetic California**, and the **donor pool average**. Good balance means the synthetic control closely matches California on all predictors — not just the outcome. Large discrepancies between California and its synthetic version would indicate that the optimization did not find a good match, undermining the credibility of the counterfactual.
 
 ```{r}
-balance <- scm_data %>%
-  grab_balance_table()
 
-print(balance)
 ```
 
 1.  How well does synthetic California match real California on each predictor? Are there any variables where the match is particularly poor?
